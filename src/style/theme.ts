@@ -1,6 +1,6 @@
-import { background, extendTheme } from "@chakra-ui/react";
+import { extendTheme } from "@chakra-ui/react";
 import { buttonStyle as Button } from "./buttonStyle";
-import { color } from "framer-motion";
+
 export const theme = extendTheme({
   config: {
     initialColorMode: "light",
@@ -17,5 +17,7 @@ export const theme = extendTheme({
   },
   colors: {
     primary: "#60A5FA",
+    primary2: "#2563EB",
+    appGray: "#6B7280",
   },
 });

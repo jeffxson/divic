@@ -14,7 +14,7 @@ export const FormInput: React.FC<FormInputProps> = ({
   type,
   mr,
   onInput,
-  id,
+  h,
   isInvalid,
   error,
   value,
@@ -32,15 +32,15 @@ export const FormInput: React.FC<FormInputProps> = ({
   return (
     <FormControl textAlign="left" isInvalid={isInvalid} mr={mr} mb="30px">
       {label && (
-        <span>
+        <b>
           {label}
           <br></br>
-        </span>
+        </b>
       )}
 
       <InputGroup>
         {innerElement ? (
-          <InputLeftElement pointerEvents="none">
+          <InputLeftElement mt="3px" pointerEvents="none">
             {innerElement}
           </InputLeftElement>
         ) : (
@@ -49,13 +49,14 @@ export const FormInput: React.FC<FormInputProps> = ({
 
         <Input
           autoComplete={autocomplete}
+          color="appGray"
           onPaste={onPaste}
           variant="filled"
           onInput={onInput}
           blur={onBlur}
           onClick={onClick}
           min={min}
-          h="50px"
+          h="45px"
           max={max}
           size={size}
           {...error}

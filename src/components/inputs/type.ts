@@ -6,7 +6,6 @@ import {
   MouseEventHandler,
 } from "react";
 
- 
 export interface FormInputProps {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
   onInput?: (event: ChangeEvent<HTMLInputElement>) => void;
@@ -17,7 +16,7 @@ export interface FormInputProps {
   type?: string;
   mr?: string;
   id?: string;
-  isInvalid?: boolean;
+  isInvalid?: any;
   error?: { [key: string]: any };
   value?: string;
   placeholder?: string;
@@ -27,4 +26,5 @@ export interface FormInputProps {
   size?: string;
   autocomplete?: string;
   innerElement?: ReactNode;
+  h?: any;
 }

@@ -23,8 +23,9 @@ export interface FormInputProps {
   min?: number;
   max?: number;
   isRequired?: boolean;
+  invalidBorder?: boolean;
   size?: string;
   autocomplete?: string;
   innerElement?: ReactNode;
-  h?: any;
+  bg?: string;
 }

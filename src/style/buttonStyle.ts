@@ -13,10 +13,15 @@ export const buttonStyle = {
       _hover: {
         bg: "primary2",
       },
+      _disabled: {
+        bg: "primary2",
+        
+      },
     },
+
     empty: {
       bg: "none",
-      color: "primary2",
+      color: "primary",
       fontWeight: "800",
       _hover: {
         color: "black",

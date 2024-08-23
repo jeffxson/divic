@@ -14,7 +14,6 @@ export const FormInput: React.FC<FormInputProps> = ({
   type,
   mr,
   onInput,
-  h,
   isInvalid,
   error,
   value,
@@ -28,6 +27,8 @@ export const FormInput: React.FC<FormInputProps> = ({
   onClick,
   innerElement,
   onPaste,
+  bg,
+  invalidBorder,
 }) => {
   return (
     <FormControl textAlign="left" isInvalid={isInvalid} mr={mr} mb="30px">
@@ -57,12 +58,13 @@ export const FormInput: React.FC<FormInputProps> = ({
           onClick={onClick}
           min={min}
           h="45px"
+          bg={bg}
           max={max}
           size={size}
           {...error}
           isRequired={isRequired}
           type={type}
-          border="1px solid #1B1D2847"
+          border={invalidBorder ?  "2px solid red" :"1px solid #E5E7EB"}
           w="100%"
           onChange={onChange}
           placeholder={placeholder}

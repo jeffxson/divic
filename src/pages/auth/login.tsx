@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import {
-  Box,
   Button,
   Center,
   Flex,
@@ -8,7 +7,6 @@ import {
   InputGroup,
   InputRightElement,
   Spinner,
-  Text,
   useToast,
 } from "@chakra-ui/react";
 import { FormInput } from "../../components/inputs/inputs";
@@ -23,15 +21,14 @@ import { Checkbox } from "@chakra-ui/react";
 import { loginUser } from "../../utils/fetch";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
 
 function Login() {
   const toast = useToast();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [show, setShow] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [pass, setPass] = useState<string>("");
+  const [rememberMe, setRememberMe] = useState<boolean>(false);
   const validationSchema = Yup.object().shape({
     usr: Yup.string().required("Email is Required").email(),
     pwd: Yup.string().required("Password is Required"),

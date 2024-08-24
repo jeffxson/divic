@@ -1,95 +1,106 @@
-import { useEffect } from "react";
-import {
-  Box,
-  Button,
-  Center,
-  Flex,
-  Heading,
-  InputGroup,
-  InputRightElement,
-  Spinner,
-  Text,
-  useToast,
-} from "@chakra-ui/react";
+import { FormEvent, useEffect } from "react";
+import { Box, Button, Flex, useToast } from "@chakra-ui/react";
 import { FormInput } from "../components/inputs/inputs";
-import AuthLayout from "../components/layout/authlayout";
 import { useState } from "react";
-import { LuEyeOff, LuEye } from "react-icons/lu";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import * as Yup from "yup";
-import { GoPeople, GoLock } from "react-icons/go";
-import { Checkbox } from "@chakra-ui/react";
-import { getShippingDetails } from "../utils/fetch";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { getShippingDetails } from "../utils/fetch";
+import ContentReciver from "../components/home/contentReciver";
+import ValidAwb from "../components/home/validAwb";
+//import ConnectionLost from "../components/home/connectionLost";
+//import NotFound404 from "../components/home/notFound";
+import NoResult from "../components/home/notResult";
+import PullToRefresh from "react-pull-to-refresh";
 
 function Login() {
   const toast = useToast();
   const navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [invalidBorder, setInvalidBorder] = useState(false);
-  const validationSchema = Yup.object().shape({
-    shipNumber: Yup.number()
-      .required("Shiping number is required")
-      .typeError("Please input a number")
-      .min(1000000000, "Shiping number must be at least 10 digits")
-      .max(99999999999999, "Shiping number must be at most 14 digits"),
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(true);
+  const [shipNumber, setShipNumber] = useState<string>("");
+  const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [showNotfound, setShowNotfound] = useState<boolean>(false);
+  const [enterDetails, setEnterDetails] = useState<boolean>(true);
+
+  useEffect(() => {
+    setIsButtonDisabled(shipNumber.length < 11);
+  }, [shipNumber]);
+
+  const { mutate: shippingMutate } = useMutation(getShippingDetails, {
+    onSuccess: (data) => {
+      console.log(data?.data);
+
+      toast({
+        position: "top-right",
+        description: `${data?.data?.message}`,
+        status: "success",
+        duration: 9000,
+      });
+      navigate("/app");
+    },
+    onError: (data) => {
+      toast({
+        position: "top-right",
+        // @ts-ignore
+        description: `${data?.response?.data?.message}`,
+        status: "error",
+        duration: 9000,
+      });
+    },
   });
+  console.log(shippingMutate);
 
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    setValue,
-  } = useForm({ resolver: yupResolver(validationSchema) });
-  const { mutate: shippingMutate, isLoading } = useMutation(
-    getShippingDetails,
-    {
-      onSuccess: (data) => {
-        console.log(data?.data);
-
-        toast({
-          position: "top-right",
-          description: `${data?.data?.message}`,
-          status: "success",
-          duration: 9000,
-        });
-        navigate("/app");
-      },
-      onError: (data) => {
-        toast({
-          position: "top-right",
-          // @ts-ignore
-          description: `${data?.response?.data?.message}`,
-          status: "error",
-          duration: 9000,
-        });
-      },
+  const shippingHandler = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEnterDetails(false);
+    if (shipNumber === "210173066689") {
+      setShowDetails(true);
+      setShowNotfound(false);
+    } else {
+      setShowNotfound(true);
+      setShowDetails(false);
     }
-  );
-  const shippingHandler = (data: any) => {
-    console.log(data);
-    shippingMutate({
-      doctype: "AWB",
-      filters: {
-        name: ["like", "%210173066689%"],
-      },
-    });
+
+    // shippingMutate({
+    //   doctype: "AWB",
+    //   filters: {
+    //     name: ["like", `%${shipNumber}%`],
+    //   },
+    // });
   };
-  // name: ["like", `%${data?.shipNumber}%`],
+  const shippingHandlerPull = () => {
+    setEnterDetails(false);
+    if (shipNumber === "210173066689") {
+      setShowDetails(true);
+      setShowNotfound(false);
+    } else {
+      setShowNotfound(true);
+      setShowDetails(false);
+    }
+
+    // shippingMutate({
+    //   doctype: "AWB",
+    //   filters: {
+    //     name: ["like", `%${shipNumber}%`],
+    //   },
+    // });
+  };
+
   return (
-    <Box p="50px">
-      <Box bg="#F8FAFC" px="50px" pt="30px">
-        <form onSubmit={handleSubmit(shippingHandler)}>
-          <Flex m="auto" w="70%">
+    <Box p={["10px", "10px", "40px", "50px", "50px", "50px"]}>
+      <Box
+        bg="#F8FAFC"
+        px={["10px", "10px", "40px", "50px", "50px", "50px"]}
+        pt="30px"
+      >
+        <form onSubmit={shippingHandler}>
+          <Flex m="auto" w={["100%", "100%", "80%", "70%", "70%", "70%"]}>
             <FormInput
-              placeholder="Username"
-              error={register("shipNumber")}
-              invalidBorder={invalidBorder}
-              isInvalid={errors.shipNumber && errors.shipNumber.message}
+              isRequired={true}
+              type="number"
+              placeholder="Enter AWB ID"
+              onChange={(e) => setShipNumber(e.target.value)}
+              invalidBorder={showNotfound}
+              isInvalid={showNotfound && "Please enter a valid AWB"}
               bg="white"
             />
             <Button
@@ -98,20 +109,24 @@ function Login() {
               px="40px"
               h="44px"
               variant="primary"
-              // isDisabled={!pass || !email || isLoading}
+              isDisabled={isButtonDisabled}
             >
               Track
             </Button>
           </Flex>
         </form>
       </Box>
-      <Flex>
-        <Box w="40%" border="1px solid #E5E7EB" p="20px" borderRadius="20px">
-          <Heading size="sm"></Heading>
-          <Text>6B7280</Text>
-        </Box>
-        <Box w="60%"></Box>
-      </Flex>
+      <PullToRefresh
+        // @ts-ignore
+        onRefresh={shippingHandlerPull}
+        style={{ height: "80vh", overflow: "auto" }}
+      >
+        {enterDetails && <ValidAwb />}
+        {showNotfound && <NoResult />}
+        {showDetails && <ContentReciver />}
+        {/* <ConnectionLost /> */}
+        {/* <NotFound404 /> */}
+      </PullToRefresh>
     </Box>
   );
 }

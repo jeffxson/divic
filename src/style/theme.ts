@@ -8,8 +8,8 @@ export const theme = extendTheme({
   },
 
   fonts: {
-    heading: `Poppins, sans-serif`,
-    body: `Poppins, sans-serif`,
+    heading: `inter, sans-serif`,
+    body: `inter, sans-serif`,
   },
 
   components: {

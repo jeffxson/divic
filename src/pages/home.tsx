@@ -68,14 +68,7 @@ function Login() {
     // });
   };
   const shippingHandlerPull = () => {
-    setEnterDetails(false);
-    if (shipNumber === "210173066689") {
-      setShowDetails(true);
-      setShowNotfound(false);
-    } else {
-      setShowNotfound(true);
-      setShowDetails(false);
-    }
+    setShowDetails(true);
 
     // shippingMutate({
     //   doctype: "AWB",
@@ -119,7 +112,7 @@ function Login() {
       <PullToRefresh
         // @ts-ignore
         onRefresh={shippingHandlerPull}
-        style={{ height: "80vh", overflow: "auto" }}
+        style={{ height: "100vh", overflow: "auto" }}
       >
         {enterDetails && <ValidAwb />}
         {showNotfound && <NoResult />}

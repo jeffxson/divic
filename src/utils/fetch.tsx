@@ -1,7 +1,6 @@
 import axios from "axios";
 import { BaseURL } from "./url";
 
-//Auth
 export const loginUser = async (data: object) => {
   return axios.post(`${BaseURL}/login`, data, {
     withCredentials: true,
@@ -10,6 +9,7 @@ export const loginUser = async (data: object) => {
     },
   });
 };
+
 export const getShippingDetails = async (data: object) => {
   return axios.post(`${BaseURL}/frappe.client.get`, data, {
     withCredentials: true,

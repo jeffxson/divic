@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Logo } from "../../images/svg";
 const AuthLayout = ({ children }: { children: ReactNode }) => {

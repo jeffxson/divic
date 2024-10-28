@@ -1,5 +1,3 @@
-import { border } from "@chakra-ui/react";
-
 export const buttonStyle = {
   baseStyle: { fontWeight: "100" },
   sizes: {},
@@ -15,7 +13,6 @@ export const buttonStyle = {
       },
       _disabled: {
         bg: "primary2",
-        
       },
     },
 

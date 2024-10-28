@@ -2,7 +2,6 @@ import {
   Input,
   FormControl,
   FormErrorMessage,
-  Select,
   InputGroup,
   InputLeftElement,
 } from "@chakra-ui/react";
@@ -64,7 +63,7 @@ export const FormInput: React.FC<FormInputProps> = ({
           {...error}
           isRequired={isRequired}
           type={type}
-          border={invalidBorder ?  "2px solid red" :"1px solid #E5E7EB"}
+          border={invalidBorder ? "2px solid red" : "1px solid #E5E7EB"}
           w="100%"
           onChange={onChange}
           placeholder={placeholder}

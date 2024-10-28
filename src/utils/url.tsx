@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export const BaseURL = "https://shippex-demo.bc.brandimic.com/api/method";
 
 // axios.interceptors.request.use(
